@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  selenium:
+    image: selenium/standalone-chrome:93.0.4577.63 
+    shm_size: 2gb
+    ports:
+    - 4444:4444
+    restart: always
+
+
+  app:
+    build:
+      context: .
+    volumes:
+    - ./:/app
+    command: sh -c "python3 bot.py"
+    env_file: 
+    - .env
+    depends_on: 
+    - selenium
